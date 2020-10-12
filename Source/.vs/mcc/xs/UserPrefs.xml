@@ -12,10 +12,8 @@
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="MCC" expanded="True">
-            <Node name="mcc" expanded="True">
-              <Node name="AbstractSyntaxTree.cs" selected="True" />
-            </Node>
+          <Node name="MCC" expanded="True" selected="True">
+            <Node name="mcc" expanded="True" />
           </Node>
         </State>
       </Pad>
