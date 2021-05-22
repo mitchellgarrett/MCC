@@ -24,7 +24,7 @@ namespace MCC {
 
             AbstractSyntaxTree ast = Parser.Parse(tokens);
 
-            string outfilename = inputfilename.Replace(".c", ".asm");
+            string outfilename = inputfilename.Replace(".c", ".s");
             Generator.Write(outfilename, tokens, ast);
         }
     }

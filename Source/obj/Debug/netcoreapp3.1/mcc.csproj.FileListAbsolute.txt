@@ -21,3 +21,15 @@
 /Users/mitchell/Documents/Projects/C#/MCC/obj/Debug/netcoreapp3.1/mcc.dll
 /Users/mitchell/Documents/Projects/C#/MCC/obj/Debug/netcoreapp3.1/mcc.pdb
 /Users/mitchell/Documents/Projects/C#/MCC/obj/Debug/netcoreapp3.1/mcc.genruntimeconfig.cache
+/Users/mitchell/Repositories/MCC/Source/bin/Debug/netcoreapp3.1/mcc.deps.json
+/Users/mitchell/Repositories/MCC/Source/bin/Debug/netcoreapp3.1/mcc.runtimeconfig.json
+/Users/mitchell/Repositories/MCC/Source/bin/Debug/netcoreapp3.1/mcc.runtimeconfig.dev.json
+/Users/mitchell/Repositories/MCC/Source/bin/Debug/netcoreapp3.1/mcc.dll
+/Users/mitchell/Repositories/MCC/Source/bin/Debug/netcoreapp3.1/mcc.pdb
+/Users/mitchell/Repositories/MCC/Source/obj/Debug/netcoreapp3.1/mcc.csprojAssemblyReference.cache
+/Users/mitchell/Repositories/MCC/Source/obj/Debug/netcoreapp3.1/mcc.AssemblyInfoInputs.cache
+/Users/mitchell/Repositories/MCC/Source/obj/Debug/netcoreapp3.1/mcc.AssemblyInfo.cs
+/Users/mitchell/Repositories/MCC/Source/obj/Debug/netcoreapp3.1/mcc.csproj.CoreCompileInputs.cache
+/Users/mitchell/Repositories/MCC/Source/obj/Debug/netcoreapp3.1/mcc.dll
+/Users/mitchell/Repositories/MCC/Source/obj/Debug/netcoreapp3.1/mcc.pdb
+/Users/mitchell/Repositories/MCC/Source/obj/Debug/netcoreapp3.1/mcc.genruntimeconfig.cache

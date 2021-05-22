@@ -8,15 +8,15 @@ namespace MCC {
         public static AbstractSyntaxTree Parse(Token[] stream) {
             Queue<Token> tokens = new Queue<Token>(stream);
 
-            AbstractSyntaxTree.Function main = ParseFunction(tokens);
+            AST.Function main = ParseFunction(tokens);
 
-            AbstractSyntaxTree.Program program = new AbstractSyntaxTree.Program(main);
+            AST.Program program = new AST.Program(main);
             AbstractSyntaxTree ast = new AbstractSyntaxTree(program);
 
             return ast;
         }
 
-        public static AbstractSyntaxTree.Function ParseFunction(Queue<Token> tokens) {
+        public static AST.Function ParseFunction(Queue<Token> tokens) {
             Token token = tokens.Dequeue();
             if (!Match(token, Token.TokenType.Keyword, Syntax.GetKeyword(Syntax.Keyword.Integer))) { Fail(token); }
 
@@ -33,7 +33,7 @@ namespace MCC {
             token = tokens.Dequeue();
             if (token.Type != Token.TokenType.OpenBrace) { Fail(token); }
 
-            AbstractSyntaxTree.Function function = new AbstractSyntaxTree.Function(identifier, ParseStatement(tokens));
+            AST.Function function = new AST.Function(identifier, ParseStatement(tokens));
 
             token = tokens.Dequeue();
             if (token.Type != Token.TokenType.CloseBrace) { Fail(token); }
@@ -41,12 +41,12 @@ namespace MCC {
             return function;
         }
 
-        public static AbstractSyntaxTree.Statement ParseStatement(Queue<Token> tokens) {
+        public static AST.Statement ParseStatement(Queue<Token> tokens) {
             Token token = tokens.Dequeue();
             if(!Match(token, Token.TokenType.Keyword, Syntax.GetKeyword(Syntax.Keyword.Return))) { Fail(token); }
 
-            AbstractSyntaxTree.Expression expression = ParseExpression(tokens);
-            AbstractSyntaxTree.Statement statement = new AbstractSyntaxTree.Return(expression);
+            AST.Expression expression = ParseExpression(tokens);
+            AST.Statement statement = new AST.Return(expression);
 
             token = tokens.Dequeue();
             if (token.Type != Token.TokenType.Semicolon) { Fail(token); }
@@ -54,13 +54,23 @@ namespace MCC {
             return statement;
         }
 
-        static AbstractSyntaxTree.Expression ParseExpression(Queue<Token> tokens) {
+        static AST.Expression ParseExpression(Queue<Token> tokens) {
             Token token = tokens.Dequeue();
-            if (token.Type != Token.TokenType.IntegerLiteral) { Fail(token); }
+            switch (token.Type) {
+                case Token.TokenType.IntegerLiteral:
+                case Token.TokenType.CharacterLiteral:
+                case Token.TokenType.StringLiteral:
+                    return new AST.Constant(token.Value);
 
-            AbstractSyntaxTree.Constant expression = new AbstractSyntaxTree.Constant(token.Value);
+                case Token.TokenType.UnaryOperator:
+                    return new AST.UnaryOperator(token.Value[0], ParseExpression(tokens));
 
-            return expression;
+                //case Token.TokenType.BinaryOperator:
+                    //return new AbstractSyntaxTree.BinaryOperator(token.Value[0], ParseExpression(tokens));
+            }
+
+            Fail(token);
+            return null;
         }
 
         static bool Match(Token token, Token.TokenType type, string value) {

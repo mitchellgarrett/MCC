@@ -58,6 +58,8 @@ namespace MCC {
         
         static Token BuildToken(char src) {
             switch (src) {
+
+                // Punctuation
                 case Syntax.semicolon:
                     return GetCommonToken(Token.TokenType.Semicolon);
                 case Syntax.open_brace:
@@ -68,6 +70,24 @@ namespace MCC {
                     return GetCommonToken(Token.TokenType.OpenParenthesis);
                 case Syntax.close_parenthesis:
                     return GetCommonToken(Token.TokenType.CloseParenthesis);
+
+                // Unary Operators
+                case Syntax.operator_negation:
+                    return new Token(Token.TokenType.UnaryOperator, Syntax.operator_negation);
+                case Syntax.operator_subtraction:
+                    return new Token(Token.TokenType.UnaryOperator, Syntax.operator_subtraction);
+                case Syntax.operator_complement:
+                    return new Token(Token.TokenType.UnaryOperator, Syntax.operator_complement);
+
+                // Binay Operators
+                case Syntax.operator_addition:
+                    return new Token(Token.TokenType.BinaryOperator, Syntax.operator_addition);
+                case Syntax.operator_multiplication:
+                    return new Token(Token.TokenType.BinaryOperator, Syntax.operator_multiplication);
+                case Syntax.operator_division:
+                    return new Token(Token.TokenType.BinaryOperator, Syntax.operator_division);
+                case Syntax.operator_modulus:
+                    return new Token(Token.TokenType.BinaryOperator, Syntax.operator_modulus);
             }
             
             return Token.Invalid;
@@ -97,9 +117,9 @@ namespace MCC {
             return token;
         }
     }
-    
+
     public struct Token {
-        public enum TokenType { Invalid, Semicolon, OpenBrace, CloseBrace, OpenParenthesis, CloseParenthesis, Keyword, Identifier, CharacterLiteral, IntegerLiteral, StringLiteral };
+        public enum TokenType { Invalid, Semicolon, OpenBrace, CloseBrace, OpenParenthesis, CloseParenthesis, Keyword, Identifier, CharacterLiteral, IntegerLiteral, StringLiteral, UnaryOperator, BinaryOperator };
             
         public TokenType Type;
         public string Value;

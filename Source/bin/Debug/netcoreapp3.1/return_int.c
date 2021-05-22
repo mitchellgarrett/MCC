@@ -1,3 +1,6 @@
+#include <stdio.h>
+
 int main() {
-    return 1;
+	printf("k\n");
+    return -1;
 }

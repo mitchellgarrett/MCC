@@ -4,13 +4,6 @@ namespace MCC {
 
     public static class Generator {
 
-        // Use 'main' instead '_main' if not OS X
-        const string assembly_format = "\t.globl _main\n_main:\n\tmovl\t${}, %eax\n\tret\n";
-
-        const string function_format = "\t.globl _{0}\n_{0}:\n";
-
-        const string return_format = "\tmovl ${0}, %eax\n\tret\n";
-
         public static void Write(string filename, Token[] tokens, AbstractSyntaxTree ast) {
             StreamWriter writer = new StreamWriter(filename, false);
 
@@ -28,30 +21,54 @@ namespace MCC {
             writer.Close();
         }
 
-        static void WriteProgram(StreamWriter writer) {
-            writer.Write(assembly_format);
-        }
-
-        static void WriteFunction(StreamWriter writer, AbstractSyntaxTree.Function function) {
-            writer.Write(function_format, function.Identifier);
+        static void WriteFunction(StreamWriter writer, AST.Function function) {
+            writer.Write(Assembly.format_function, function.Identifier);
             WriteStatement(writer, function.Body);
         }
 
-        static void WriteStatement(StreamWriter writer, AbstractSyntaxTree.Statement statement) {
-            if (statement is AbstractSyntaxTree.Return) {
-                WriteReturn(writer, (AbstractSyntaxTree.Return)statement);
+        static void WriteReturn(StreamWriter writer, AST.Return ret) {
+            WriteExpression(writer, ret.Expression);
+            writer.Write(Assembly.format_return);
+        }
+
+        static void WriteStatement(StreamWriter writer, AST.Statement statement) {
+            if (statement is AST.Return) {
+                WriteReturn(writer, (AST.Return)statement);
             }
         }
 
-        static void WriteReturn(StreamWriter writer, AbstractSyntaxTree.Return ret) {
-            writer.Write(return_format, WriteExpression(writer, ret.Expression));
+        static void WriteExpression(StreamWriter writer, AST.Expression expression) {
+            if (expression is AST.Constant constant) {
+                writer.Write(Assembly.format_constant, Assembly.register_A_32, constant.Value);
+            } else if(expression is AST.UnaryOperator unary) {
+                WriteUnaryOperator(writer, unary);
+            }
         }
 
-        static string WriteExpression(StreamWriter writer, AbstractSyntaxTree.Expression expression) {
-            if (expression is AbstractSyntaxTree.Constant) {
-                return ((AbstractSyntaxTree.Constant)expression).Value;
+        static void WriteUnaryOperator(StreamWriter writer, AST.UnaryOperator unary) {
+            WriteExpression(writer, unary.Expression);
+
+            switch (unary.Operator) {
+                case Syntax.operator_subtraction:
+                    writer.Write(Assembly.format_negate, Assembly.register_A_32);
+                    break;
+
+                case Syntax.operator_negation:
+                    writer.Write(Assembly.format_not, Assembly.register_A_32);
+                    break;
+
+                case Syntax.operator_complement:
+                    writer.Write(Assembly.format_complement, Assembly.register_A_32);
+                    break;
             }
-            return "";
+        }
+
+        // FIXME
+        static void WriteBinaryOperator(StreamWriter writer, AST.BinaryOperator binary) {
+            WriteExpression(writer, binary.LeftExpression);
+            WriteExpression(writer, binary.RightExpression);
+
+            // Write operator
         }
 
     }

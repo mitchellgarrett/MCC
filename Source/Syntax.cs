@@ -13,10 +13,13 @@ namespace MCC {
         
         public const char operator_addition = '+';
         public const char operator_subtraction = '-';
-        public const char operator_Multiplication = '*';
+        public const char operator_multiplication = '*';
         public const char operator_division = '/';
         public const char operator_modulus = '%';
-        
+
+        public const char operator_negation = '!';
+        public const char operator_complement = '~';
+
         public const string conditional_and = "&&";
         public const string conditional_or = "||";
         

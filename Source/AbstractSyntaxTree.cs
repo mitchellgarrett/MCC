@@ -1,22 +1,23 @@
-﻿using System;
-
-namespace MCC {
+﻿namespace MCC {
 
     public class AbstractSyntaxTree {
 
-        public Program Root;
+        public AST.Program Root;
 
-        public AbstractSyntaxTree(Program root) {
+        public AbstractSyntaxTree(AST.Program root) {
             this.Root = root;
         }
 
         public override string ToString() {
             return Root.ToString();
         }
+    }
 
-        public interface ASTNode { }
+    public static class AST {
 
-        public struct Program : ASTNode {
+        public abstract class ASTNode { }
+
+        public class Program : ASTNode {
             public Function Main;
 
             public Program(Function main) {
@@ -28,7 +29,7 @@ namespace MCC {
             }
         }
 
-        public struct Function : ASTNode {
+        public class Function : ASTNode {
             public string Identifier;
             public Statement Body;
 
@@ -44,9 +45,9 @@ namespace MCC {
 
         /*** STATEMENTS ***/
 
-        public interface Statement : ASTNode { }
+        public abstract class Statement : ASTNode { }
 
-        public struct Return : Statement {
+        public class Return : Statement {
             public Expression Expression;
 
             public Return(Expression expression) {
@@ -58,7 +59,7 @@ namespace MCC {
             }
         }
 
-        public struct Assign : Statement {
+        public class Assign : Statement {
             public Variable Variable;
             public Expression Expression;
 
@@ -74,9 +75,9 @@ namespace MCC {
 
         /*** EXPRESSIONS ***/
 
-        public interface Expression : ASTNode { }
+        public abstract class Expression : ASTNode { }
 
-        public struct Constant : Expression {
+        public class Constant : Expression {
             public string Value;
 
             public Constant(string value) {
@@ -88,7 +89,7 @@ namespace MCC {
             }
         }
 
-        public struct Variable : Expression {
+        public class Variable : Expression {
             public string Identifier;
             public string Value;
 
@@ -99,6 +100,36 @@ namespace MCC {
 
             public override string ToString() {
                 return Identifier + "<" + Value + ">";
+            }
+        }
+
+        public class UnaryOperator : Expression {
+            public char Operator;
+            public Expression Expression;
+
+            public UnaryOperator(char op, Expression exp) {
+                this.Operator = op;
+                this.Expression = exp;
+            }
+
+            public override string ToString() {
+                return Operator + Expression.ToString();
+            }
+        }
+
+        public class BinaryOperator : Expression {
+            public char Operator;
+            public Expression LeftExpression;
+            public Expression RightExpression;
+
+            public BinaryOperator(char op, Expression lhs, Expression rhs) {
+                this.Operator = op;
+                this.LeftExpression = lhs;
+                this.RightExpression = rhs;
+            }
+
+            public override string ToString() {
+                return LeftExpression.ToString() + Operator + RightExpression.ToString();
             }
         }
     }

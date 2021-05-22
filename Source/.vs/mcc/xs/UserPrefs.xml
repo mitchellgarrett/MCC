@@ -1,19 +1,22 @@
 ﻿<Properties StartupConfiguration="{C4B8EB02-222A-4BB4-B8A5-A5735654B95C}|Default">
   <MonoDevelop.Ide.ItemProperties.mcc PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="AbstractSyntaxTree.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Generator.cs">
     <Files>
-      <File FileName="Compiler.cs" Line="27" Column="67" />
-      <File FileName="AbstractSyntaxTree.cs" Line="101" Column="53" />
+      <File FileName="Compiler.cs" Line="9" Column="42" />
       <File FileName="Lexer.cs" />
-      <File FileName="Parser.cs" />
       <File FileName="Syntax.cs" />
-      <File FileName="Generator.cs" />
+      <File FileName="Assembly.cs" />
+      <File FileName="Generator.cs" Line="1" Column="1" />
+      <File FileName="AbstractSyntaxTree.cs" />
+      <File FileName="Parser.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="MCC" expanded="True" selected="True">
-            <Node name="mcc" expanded="True" />
+          <Node name="MCC" expanded="True">
+            <Node name="mcc" expanded="True">
+              <Node name="Generator.cs" selected="True" />
+            </Node>
           </Node>
         </State>
       </Pad>
